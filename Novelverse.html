@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novel Progress Tracker - Sign In</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .nav-bar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.nav-bar button {
+    padding: 8px 16px;
+    border: 2px solid var(--sepia);
+    background: var(--aged-paper);
+    cursor: pointer;
+    font-family: 'Crimson Pro', serif;
+    transition: 0.3s;
+}
+
+.nav-bar button:hover {
+    background: var(--sepia);
+    color: var(--paper);
+}
+
+        :root {
+            --ink: #1a1a1a;
+            --paper: #f8f6f1;
+            --aged-paper: #e8e4d8;
+            --sepia: #c4a574;
+            --gold: #d4af37;
+            --burgundy: #5c1a1a;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --card-bg: linear-gradient(135deg,#f8f5ee,#e7dfcf);
+--card-text: #2a2a2a;
+        }
+        body.dark {
+    --ink: #ffffff;              /* Pure readable text */
+    --paper: #1f1f24;            /* Card background */
+    --aged-paper: #2c2c34;       /* Secondary surfaces */
+    --sepia: #ffcc66;            /* Navigation + highlights */
+    --gold: #ffd700;             /* Accent gold */
+    --burgundy: #ff6b6b;         /* Header title color */
+    background: #121214;         /* Deep background */
+
+    --card-bg: linear-gradient(135deg,#2c2c34,#1f1f24);
+--card-text: #f5f5f5;        
+
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+       font-family: 'Crimson Pro', serif;
+       background: linear-gradient(135deg, var(--aged-paper), var(--paper));
+        min-height: 100vh;
+        position: relative;
+        overflow-y: auto;
+        transition: background 0.4s ease, color 0.3s ease;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.02) 2px, rgba(0,0,0,.02) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.02) 2px, rgba(0,0,0,.02) 4px);
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .book-ornament {
+            position: absolute;
+            opacity: 0.08;
+            color: var(--sepia);
+            font-size: 400px;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            user-select: none;
+            pointer-events: none;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .book-ornament.left {
+            top: -100px;
+            left: -150px;
+            transform: rotate(-15deg);
+        }
+
+        .book-ornament.right {
+            bottom: -150px;
+            right: -100px;
+            transform: rotate(15deg);
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+}
+
+
+        .container {
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.section.active {
+    display: block;
+}
+
+
+        .auth-card {
+            background: var(--paper);
+            width: 440px;
+            padding: 60px 50px;
+            border-radius: 4px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
+            border: 3px solid var(--aged-paper);
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05), transparent 70%);
+            pointer-events: none;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 600;
+            color: var(--burgundy);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--sepia);
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--ink);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 18px;
+            border: 2px solid var(--aged-paper);
+            background: rgba(255, 255, 255, 0.6);
+            font-family: 'Crimson Pro', serif;
+            font-size: 16px;
+            color: var(--ink);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--sepia);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 0 3px rgba(196, 165, 116, 0.1);
+        }
+
+        input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--burgundy), #7a2424);
+            color: var(--paper);
+            border: none;
+            font-family: 'Crimson Pro', serif;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(92, 26, 26, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Small action buttons (update, delete, favourite etc) */
+.action-btn{
+    padding:6px 12px;
+    margin-top:8px;
+    border:none;
+    border-radius:4px;
+    font-family:'Crimson Pro', serif;
+    font-size:14px;
+    cursor:pointer;
+    transition:all .25s ease;
+}
+
+/* Update button */
+.btn-update{
+    background:#c58a52;
+    color:white;
+}
+
+.btn-update:hover{
+    background:#a86f3d;
+}
+
+/* Delete button */
+.btn-delete{
+    background:#d9534f;
+    color:white;
+}
+
+.btn-delete:hover{
+    background:#b63d3a;
+}
+
+/* Favourite button */
+.btn-fav{
+    background:#ffd27a;
+    color:#3a2a00;
+}
+
+.btn-fav:hover{
+    background:#e6b95c;
+}
+
+/* Save review button */
+.btn-save{
+    background:#5c7cfa;
+    color:white;
+}
+
+.btn-save:hover{
+    background:#3b5bdb;
+}
+
+body.dark .btn-update{
+    background:#e2a96c;
+    color:#000;
+}
+
+body.dark .btn-delete{
+    background:#ff6b6b;
+}
+
+body.dark .btn-fav{
+    background:#ffd700;
+    color:#000;
+}
+
+body.dark .btn-save{
+    background:#748ffc;
+}
+        .message {
+            margin-top: 20px;
+            padding: 14px 18px;
+            border-radius: 2px;
+            font-size: 14px;
+            text-align: center;
+            animation: slideIn 0.3s ease-out;
+            border-left: 4px solid;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.success {
+            background: rgba(76, 175, 80, 0.1);
+            color: #2e7d32;
+            border-color: #4caf50;
+        }
+
+        .message.info {
+            background: rgba(33, 150, 243, 0.1);
+            color: #1565c0;
+            border-color: #2196f3;
+        }
+
+        .message.error {
+            background: rgba(244, 67, 54, 0.1);
+            color: #c62828;
+            border-color: #f44336;
+        }
+
+        .divider {
+            margin: 32px 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--aged-paper), transparent);
+        }
+
+        .footer-text {
+            text-align: center;
+            color: var(--sepia);
+            font-size: 13px;
+            margin-top: 24px;
+            font-style: italic;
+        }
+
+        /* Home Page Styles */
+        /*.home-container {
+    opacity: 0;
+    transform: translateY(30px);
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+.home-container.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}*/
+#homeContainer {
+    display: none;
+}
+
+#authContainer {
+    transition: all 0.5s ease;
+}
+
+#authContainer.hidden {
+    opacity: 0;
+    transform: translateY(-30px);
+    pointer-events: none;
+}
+
+
+        .home-header {
+            text-align: center;
+            margin-bottom: 50px;
+            
+
+
+        }
+
+        .home-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            font-weight: 600;
+            color: var(--burgundy);
+            margin-bottom: 12px;
+        }
+
+        .home-welcome {
+            font-size: 18px;
+            color: var(--sepia);
+            font-weight: 300;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 24px;
+            background: var(--aged-paper);
+            color: var(--ink);
+            border: 2px solid var(--sepia);
+            font-family: 'Crimson Pro', serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: var(--sepia);
+            color: var(--paper);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .dashboard-card {
+            background: var(--paper);
+            padding: 30px;
+            border-radius: 4px;
+            border: 2px solid var(--aged-paper);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        body.dark .dashboard-card {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    border: 1px solid #3a3a44;
+}
+body.dark input,
+body.dark select {
+    background: #2c2c34;
+    color: #ffffff;
+    border: 1px solid #444;
+}
+
+body.dark input::placeholder {
+    color: #bbbbbb;
+}
+body.dark .btn {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+}
+body.dark #booksSection .dashboard-card {
+    background: #2c2c34;
+}
+
+/* Make all main text white in dark mode */
+body.dark .home-title,
+body.dark .card-title,
+body.dark .card-content,
+body.dark p,
+body.dark strong,
+body.dark label {
+    color: #ffffff;
+}
+body.dark .nav-bar button {
+    color: #ffffff;
+}
+body.dark #dashTotal,
+body.dark #dashReading,
+body.dark #dashCompleted,
+body.dark #dashWant,
+body.dark #booksReadCount,
+body.dark #currentlyReadingCount,
+body.dark #wantToReadCount,
+body.dark #favouriteCount,
+body.dark #totalBooksCount {
+    color: #ffffff;
+}
+
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--burgundy);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .card-content {
+            color: var(--ink);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .placeholder-text {
+            color: var(--sepia);
+            font-style: italic;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 18px;
+        }
+        /* only center the login card */
+#authContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* allow homepage to use full width */
+.container {
+    display: block;
+    min-height: 100vh;
+}
+.progress-fill {
+    height: 100%;
+     background: linear-gradient(90deg, #c58a52, #ffd27a);
+    box-shadow: 0 0 6px rgba(255,210,122,0.4);
+    width: 0;
+    transition: width 1s ease-in-out;
+}
+
+/* Improve stats visibility in LIGHT mode */
+.dashboard-card strong {
+    color: var(--burgundy);
+    font-size: 18px;
+}
+
+textarea::placeholder {
+    color: #999;
+    font-style: italic;
+}
+body.dark textarea::placeholder {
+    color: #bbbbbb;
+}
+textarea {
+    background: #f7f4ee;
+    border: 1px solid #c4a574;
+    color: #1a1a1a;
+}
+
+#friendsList div {
+    padding: 6px 10px;
+    background: var(--aged-paper);
+    border-radius: 4px;
+}
+.profile-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+#profilePic {
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    display:none;
+}
+
+/* 🔥 Change Profile Button Position */
+#changeProfileBtn {
+    position: absolute;
+    top: 0;
+    right: -12px;
+    padding: 4px 8px;
+    font-size: 11px;
+    border-radius: 4px;
+    background: var(--sepia);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#changeProfileBtn:hover {
+    background: var(--burgundy);
+}
+#bioDisplay {
+    background: var(--aged-paper);
+    padding: 10px;
+    border-left: 3px solid var(--sepia);
+    border-radius: 4px;
+}
+body.dark textarea {
+    background: #1f1f24;
+    border: 1px solid #555;
+    color: #eee;
+}
+#booksSection .dashboard-card {
+    max-width: 1000px;
+    margin: auto;
+}
+* {
+    transition: 
+        background-color 0.35s ease,
+        color 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+.dashboard-card {
+    transition: all 0.35s ease;
+}
+* {
+  transition:
+    background 0.35s ease,
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+#themeToggle {
+    width: auto;
+    padding: 10px 22px;
+}
+.toggle-theme {
+    position: absolute;
+    top: 90px;
+    left: 40px;
+}
+   .theme-btn {
+    max-width: 200px;
+    margin: 20px auto 0;
+    display: block;
+}
+body.dark .theme-btn {
+    background: linear-gradient(135deg, #5c1a1a, #7a2424);
+}
+.welcome-wrapper {
+    text-align: center;
+    margin-top: 10px;
+}
+#notifDot {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    display: none;
+}
+#searchUserResults div:hover {
+    transform: scale(1.02);
+    transition: 0.2s ease;
+}
+body.dark #communitySection {
+    color: #ffffff;
+}
+
+body.dark #communitySection strong,
+body.dark #communitySection span,
+body.dark #communitySection p {
+    color: #ffffff;
+}
+
+body.dark #searchUserResults div {
+    background: #2c2c34;
+    color: #ffffff;
+}
+   </style>
+</head>
+<body>
+    <div class="book-ornament left">❝</div>
+    <div class="book-ornament right">❞</div>
+
+    <!-- Sign In Page -->
+    <div class="container" id="authContainer">
+        <div class="auth-card">
+            <div class="header">
+                <h1 class="logo">Novelverse</h1>
+                <p class="subtitle">Progress Tracker</p>
+            </div>
+
+            <form id="authForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        placeholder="Enter your username"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <button type="submit" class="btn" id="submitBtn">Sign In</button>
+<button type="button" class="btn" onclick="registerUser()" style="background:#444;">
+    Create Account
+</button>
+
+                <div id="messageContainer"></div>
+            </form>
+
+            <div class="footer-text">
+                First time here? We'll create your account automatically.
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+<div class="home-container" id="homeContainer">
+
+    <button class="logout-btn" onclick="logoutUser()">Sign Out</button>
+
+    <div class="nav-bar">
+         <button onclick="showSection('profile')">Profile</button>
+        <button onclick="showSection('dashboard')">Dashboard</button>
+        <button onclick="showSection('books')">My Books</button>
+        <button onclick="showSection('newBook')">New Book</button>
+        <button onclick="showSection('favourites')">Favourites</button>
+        <button onclick="showSection('want')">Want To Read</button>
+        <button onclick="showSection('community')">Community</button>
+         <button onclick="showSection('search')">Search</button>
+         <button onclick="showSection('notifications')" style="position:relative;">
+    Notifications
+    <span id="notifDot"></span>
+</button>
+    </div>
+
+<button id="themeToggle" class="btn theme-btn" onclick="toggleDarkMode()">
+    Dark Mode
+</button>
+        <div class="welcome-wrapper">
+    <h1 class="home-title">
+        Welcome Back, <span id="displayUsername"></span>
+    </h1>
+    <p class="home-welcome">Your reading journey continues...</p>
+</div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="section" id="dashboardSection">
+        <div class="dashboard-card">
+            <h2 class="card-title">Dashboard</h2>
+            <p>Total Books: <strong id="dashTotal">0</strong></p>
+            <p>Currently Reading: <strong id="dashReading">0</strong></p>
+            <p>Completed: <strong id="dashCompleted">0</strong></p>
+            <p>Want To Read: <strong id="dashWant">0</strong></p>
+        </div>
+    </div>
+
+   
+    <!-- PROFILE -->
+<div class="section" id="profileSection">
+    <div class="dashboard-card">
+        <h2 class="card-title">Profile</h2>
+
+        <div class="profile-wrapper">
+
+    <img id="profilePic" src=""
+         style="width:120px;height:120px;border-radius:50%;object-fit:cover;display:none;">
+
+    <button id="changeProfileBtn"
+            onclick="enableProfileEdit()"
+            style="display:none; position:absolute; top:0; right:-1170px;
+top:-10px;">
+        Change Profile
+    </button>
+</div>
+
+<br><br>
+
+<input type="file" id="profilePicInput" style="display:none;"><br><br>
+
+<p id="bioDisplay" style="margin-top:10px;font-style:italic;color:var(--sepia);">
+    No bio added yet.
+</p>
+
+<textarea id="bioInput"
+          placeholder="Write your bio..."
+          oninput="autoResize(this)"
+          style="display:none;width:100%;"></textarea>
+
+<button class="btn" id="saveProfileBtn" onclick="saveProfile()">Save Profile</button>
+        <p><strong>Username:</strong> <span id="profileUsername"></span></p>
+        <p><strong>Member Since:</strong> <span id="memberSince"></span></p>
+        <p><strong>Total Books:</strong> <span id="totalBooksCount">0</span></p>
+        
+
+    </div>
+</div>
+
+
+
+    <!-- NEW BOOK -->
+<div class="section" id="newBookSection">
+    <div class="dashboard-card">
+        <h2 class="card-title">Add New Book</h2>
+        <input type="text" id="bookTitle" placeholder="Book Title"><br><br>
+        <input type="text" id="authorName" placeholder="Author"><br><br>
+        <input type="file" id="bookCoverInput" accept="image/*"><br><br>
+        <input type="number" id="totalPages" placeholder="Total Pages"><br><br>
+        <input type="number" id="currentPage" placeholder="Current Page"><br><br>
+         <select id="bookStatus">
+            <option value="reading">Currently Reading</option>
+            <option value="completed">Completed</option>
+            <option value="want">Want to Read</option>
+        </select><br><br>
+        <button type="button" class="btn" onclick="addBook()">Add Book</button>
+    </div>
+</div>
+
+
+    <!-- BOOKS -->
+    <div class="section" id="booksSection">
+        <div class="dashboard-card">
+            <h2 class="card-title">Your Books</h2>
+            <div id="bookList"></div>
+        </div>
+    </div>
+
+    
+
+    <!-- SEARCH -->
+    <div class="section" id="searchSection">
+    <div class="dashboard-card">
+        <input type="text" id="searchInput"
+               placeholder="Search by title..."
+               onkeyup="displayBooks()">
+        <div id="searchResults" style="margin-top:20px;"></div>
+    </div>
+</div>
+
+
+    <!-- FAVOURITES -->
+    <div class="section" id="favouritesSection">
+        <div class="dashboard-card">
+            <h2 class="card-title">Favourites</h2>
+            <div id="favouritesList"></div>
+        </div>
+    </div>
+
+
+    <!-- WANT TO READ -->
+<div class="section" id="wantSection">
+    <div class="dashboard-card">
+        <h2 class="card-title">Want To Read</h2>
+        <div id="wantList"></div>
+    </div>
+</div>
+
+<!-- COMMUNITY -->
+<div class="section" id="communitySection">
+    <div class="dashboard-card">
+        <h2 class="card-title">Community</h2>
+
+        <!-- Add Friend -->
+        <input type="text" id="friendSearch" placeholder="Search users">
+<button onclick="searchUsers()">Search</button>
+
+<div id="searchUserResults"></div>
+
+        <!-- Friends List -->
+        <h3 style="margin-top:25px;">Friends</h3>
+        <div id="friendsList"></div>
+
+        <!-- Activity Feed -->
+        <h3 style="margin-top:25px;">Activity Feed</h3>
+        <div id="communityFeed"></div>
+    </div>
+</div>
+</div>
+<div class="section" id="notificationsSection">
+    <div class="dashboard-card">
+        <h2 class="card-title">Notifications</h2>
+        <div id="notificationsList"></div>
+    </div>
+</div>
+<script>
+    const users = JSON.parse(localStorage.getItem('novelTrackerUsers')) || {};
+let currentUser = localStorage.getItem('currentUser');
+let chart;
+
+/* ===========================
+   AUTO LOGIN
+=========================== */
+if (currentUser && users[currentUser]) {
+    showHomePage(currentUser);
+}
+
+/* ===========================
+   SIGN IN
+=========================== */
+document.getElementById("authForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!users[username] || users[username] !== password) {
+        showMessage("Invalid username or password", "error");
+        return;
+    }
+
+    currentUser = username;
+    localStorage.setItem("currentUser", username);
+    showHomePage(username);
+});
+
+/* ===========================
+   REGISTER
+=========================== */
+function registerUser() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!username || !password) {
+        showMessage('Enter username and password', 'error');
+        return;
+    }
+
+    if (users[username]) {
+        showMessage('Username already exists. Please sign in.', 'error');
+        return;
+    }
+
+    users[username] = password;
+    localStorage.setItem('novelTrackerUsers', JSON.stringify(users));
+
+    showMessage('Account created! Now sign in.', 'success');
+}
+
+/* ===========================
+   LOGOUT
+=========================== */
+
+
+
+
+
+
+
+/* ===========================
+   SHOW MESSAGE
+=========================== */
+function showMessage(message, type) {
+    document.getElementById('messageContainer').innerHTML =
+        `<div class="message ${type}">${message}</div>`;
+}
+
+/* ===========================
+   SHOW HOME
+=========================== */
+function showHomePage(username) {
+document.getElementById("searchInput").value = "";
+    document.getElementById("authContainer").style.display = "none";
+    document.getElementById("homeContainer").style.display = "block";
+
+    document.getElementById("displayUsername").textContent = username;
+    document.getElementById("profileUsername").textContent = username;
+
+    if (!localStorage.getItem("member_" + username)) {
+        localStorage.setItem("member_" + username, new Date().toLocaleDateString());
+    }
+
+    document.getElementById("memberSince").textContent =
+        localStorage.getItem("member_" + username);
+
+    displayBooks();
+    updateStats();
+    
+    loadProfile();
+
+    
+    // Check if this is a fresh login
+const lastSection = localStorage.getItem("lastSection");
+
+if (lastSection) {
+    showSection(lastSection);
+} else {
+    showSection("profile");
+}
+
+// ✅ add this
+updateNotificationBadge();
+}
+
+
+
+/* ===========================
+   BOOK STORAGE
+=========================== */
+function getUserBooks() {
+    return JSON.parse(localStorage.getItem("books_" + currentUser)) || [];
+}
+
+function saveUserBooks(books) {
+    localStorage.setItem("books_" + currentUser, JSON.stringify(books));
+}
+
+/* ===========================
+   ADD BOOK
+=========================== */
+async function addBook() {
+    const title = document.getElementById("bookTitle").value.trim();
+    const author = document.getElementById("authorName").value.trim();
+    const totalPages = parseInt(document.getElementById("totalPages").value);
+    const currentPage = parseInt(document.getElementById("currentPage").value) || 0;
+    const status = document.getElementById("bookStatus").value;
+    const file = document.getElementById("bookCoverInput").files[0];
+
+    if (!title) {
+        alert("Enter book title");
+        return;
+    }
+
+    let finalStatus = status;
+    if (totalPages && currentPage >= totalPages) {
+        finalStatus = "completed";
+    }
+
+   let description = "";
+
+try {
+    const res = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=5`
+    );
+
+    const data = await res.json();
+
+    if (data.items && data.items.length > 0) {
+
+        for (let item of data.items) {
+            if (item.volumeInfo.description) {
+                description = item.volumeInfo.description;
+                break;
+            }
+        }
+
+        if (!description) {
+            description = "No description available.";
+        }
+
+    } else {
+        description = "No description found.";
+    }
+
+} catch (error) {
+    console.log(error);
+    description = "Description unavailable.";
+}
+
+    // ✅ function to save book
+    function saveBook(coverImage = "") {
+        const books = getUserBooks();
+
+        books.push({
+            id: Date.now(),
+            title,
+            author,
+            description,
+            cover: coverImage,
+            review: "",
+            totalPages: totalPages || 0,
+            currentPage,
+            status: finalStatus,
+            favourite: false,
+            completedMonth:
+                finalStatus === "completed"
+                    ? new Date().getMonth()
+                    : null
+        });
+
+        saveUserBooks(books);
+        displayBooks();
+        updateStats();
+        showSection("books");
+    }
+
+    // ✅ if cover selected → read image
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = e => saveBook(e.target.result);
+        reader.readAsDataURL(file);
+    } else {
+        saveBook();
+    }
+    description = description.substring(0, 220) + "...";
+    document.getElementById("bookTitle").value = "";
+document.getElementById("authorName").value = "";
+document.getElementById("totalPages").value = "";
+document.getElementById("currentPage").value = "";
+document.getElementById("bookCoverInput").value = "";
+}
+/* ===========================
+   DISPLAY BOOKS
+=========================== */
+function displayBooks() {
+    const isSearchActive = document
+        .getElementById("searchSection")
+        .classList.contains("active");
+
+    const bookList = isSearchActive
+        ? document.getElementById("searchResults")
+        : document.getElementById("bookList");
+
+    const searchTerm =
+        document.getElementById("searchInput")?.value.toLowerCase() || "";
+
+    const books = getUserBooks().filter(book =>
+        book.title.toLowerCase().includes(searchTerm)
+    );
+
+    if (books.length === 0) {
+        bookList.innerHTML =
+            `<p class="placeholder-text">No matching books found</p>`;
+        return;
+    }
+
+    bookList.innerHTML = books.map(book => {
+        const progress = book.totalPages
+            ? Math.round((book.currentPage / book.totalPages) * 100)
+            : 0;
+
+        const isDark = document.body.classList.contains("dark");
+
+       return `
+<div style="
+border:1px solid #c9c2b5;
+padding:20px;
+margin-bottom:28px;
+border-radius:8px;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+background:var(--card-bg);
+color:var(--card-text);
+">
+
+    <!-- TOP ROW: title + cover -->
+
+        <div>
+           <h3 style="
+    margin-bottom:6px;
+    font-size:24px;
+    font-weight:600;
+    letter-spacing:.3px;
+">
+                ${book.favourite ? '<span style="color:#ffd700;font-size:18px;">★</span>' : ""}
+                ${book.title}
+            </h3>
+<p style="
+    font-size:16px;
+    opacity:.85;
+    margin-bottom:6px;
+">
+    <em>${book.author ? "by " + book.author : "Unknown Author"}</em>
+</p>        
+        ${book.cover ? `
+            <img src="${book.cover}"
+                 style="
+                    width:110px;
+                    height:160px;
+                    object-fit:cover;
+                    border-radius:6px;
+                    box-shadow:0 4px 12px rgba(0,0,0,0.25);
+                 ">
+        ` : ""}
+    </div>
+
+    <!-- FULL WIDTH CONTENT -->
+    <div style="margin-top:10px;">
+
+        <p>Status: <strong>${book.status}</strong></p>
+        <p>Progress: ${book.currentPage}/${book.totalPages} (${progress}%)</p>
+
+        <div style="height:8px;background:${isDark ? "#555" : "#eee"};border-radius:5px;overflow:hidden;margin:8px 0;">
+            <div class="progress-fill" style="width:${progress}%;"></div>
+        </div>
+
+        <div style="margin-top:15px;">
+            <strong>Review:</strong><br>
+            <textarea
+                id="review-${book.id}"
+                oninput="autoResize(this)"
+                style="width:100%;min-height:70px;resize:none;padding:8px;border-radius:4px;"
+                placeholder="Write your thoughts about this book..."
+            >${book.review || ""}</textarea>
+
+            <div style="text-align:right;margin-top:6px;">
+                <button class="action-btn btn-save"
+onclick="saveReview(${book.id}, document.getElementById('review-${book.id}').value)">
+Save Review
+</button>
+            </div>
+        </div>
+
+        <button class="action-btn btn-update" onclick="editProgress(${book.id})">
+Update Progress
+</button>
+
+        <button class="action-btn btn-fav"
+onclick="toggleFavourite(${book.id})">
+${book.favourite ? "Remove Favourite" : "Add Favourite"}
+</button>
+
+<button class="action-btn btn-delete"
+onclick="deleteBook(${book.id})">
+Delete
+</button>
+
+    </div>
+</div>
+`;
+    }).join("");
+
+}
+
+    // Animate progress bars smoothly
+requestAnimationFrame(() => {
+    document.querySelectorAll(".progress-fill").forEach(bar => {
+        const width = bar.style.width || "0%";
+
+        bar.style.width = "0%";
+
+        // force repaint
+        bar.offsetHeight;
+
+        bar.style.width = width;
+    });
+});
+
+
+/* ===========================
+   DELETE BOOK
+=========================== */
+function deleteBook(id) {
+    let books = getUserBooks();
+    books = books.filter(book => book.id !== id);
+    saveUserBooks(books);
+    displayBooks();
+    updateStats();
+   
+
+}
+
+/* ===========================
+   EDIT PROGRESS
+=========================== */
+function editProgress(id) {
+    let books = getUserBooks();
+    const book = books.find(b => b.id === id);
+
+    const newPage = prompt("Enter new current page:", book.currentPage);
+
+    if (newPage !== null) {
+        book.currentPage = parseInt(newPage);
+
+        if (book.totalPages && book.currentPage >= book.totalPages) {
+            book.completedMonth = new Date().getMonth();
+            book.status = "completed";
+        }
+        saveUserBooks(books);
+        displayBooks();
+        updateStats();
+    }
+   
+
+}
+
+/* ===========================
+   UPDATE STATS
+=========================== */
+/* ===========================
+   UPDATE STATS
+=========================== */
+function updateStats() {
+    const books = getUserBooks();
+
+    const total = books.length;
+    const reading = books.filter(b => b.status === "reading").length;
+    const completed = books.filter(b => b.status === "completed").length;
+    const want = books.filter(b => b.status === "want").length;
+    const favs = books.filter(b => b.favourite).length;
+
+    // Dashboard
+    document.getElementById("dashTotal").textContent = total;
+    document.getElementById("dashReading").textContent = reading;
+    document.getElementById("dashCompleted").textContent = completed;
+    document.getElementById("dashWant").textContent = want;
+
+    // Profile counts
+    document.getElementById("totalBooksCount").textContent = total;
+
+    // If these exist, update safely
+    const favEl = document.getElementById("favouriteCount");
+    if (favEl) favEl.textContent = favs;
+}
+
+
+/* ===========================
+   DARK MODE
+=========================== */
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+    const btn = document.getElementById("themeToggle");
+if (btn) {
+    btn.textContent = document.body.classList.contains("dark")
+        ? "Light Mode"
+        : "Dark Mode";
+}
+}
+
+// ensure cards render with correct theme
+setTimeout(displayBooks, 0);
+
+function toggleDarkMode() {
+    document.body.classList.toggle("dark");
+
+    const btn = document.getElementById("themeToggle");
+
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+        btn.textContent = "Light Mode";
+    } else {
+        localStorage.setItem("theme", "light");
+        btn.textContent = "Dark Mode";
+    }
+}
+function showSection(section) {
+    document.querySelectorAll(".section").forEach(sec => {
+        sec.classList.remove("active");
+    });
+
+    const target = document.getElementById(section + "Section");
+
+    if (target) {
+        target.classList.add("active");
+    }
+
+    // ⭐ SAVE LAST OPEN SECTION
+    localStorage.setItem("lastSection", section);
+
+    // refresh content when needed
+    if (section === "dashboard") updateStats();
+    if (section === "books" || section === "search") displayBooks();
+    if (section === "favourites") displayFavourites();
+    if (section === "want") displayWantBooks();
+    if (section === "community") {
+        displayFriends();
+        loadCommunityFeed();
+    }
+    if (section === "notifications") {
+    loadNotifications();
+
+}
+}
+
+function displayFavourites() {
+    const books = getUserBooks().filter(b => b.favourite);
+    const container = document.getElementById("favouritesList");
+
+    if (books.length === 0) {
+        container.innerHTML = "<p>No favourite books yet.</p>";
+        return;
+    }
+
+    container.innerHTML = books.map(book =>
+    `<p>
+        ⭐ ${book.title}
+        <button onclick="toggleFavourite(${book.id})" style="margin-left:10px;color:red;">Remove</button>
+     </p>`
+).join("");
+}
+function displayWantBooks() {
+    const books = getUserBooks().filter(b => b.status === "want");
+    const container = document.getElementById("wantList");
+
+    if (books.length === 0) {
+        container.innerHTML = "<p>No books in Want To Read list.</p>";
+        return;
+    }
+
+    container.innerHTML = books.map(book =>
+        `<p>📖 ${book.title}</p>`
+    ).join("");
+}
+function toggleFavourite(id){
+    let books = getUserBooks();
+    const book = books.find(b=>b.id===id);
+    book.favourite = !book.favourite;
+    saveUserBooks(books);
+    displayBooks();
+    updateStats();
+}
+function saveReview(id, text) {
+    let books = getUserBooks();
+    const book = books.find(b => b.id === id);
+
+    if (!book) return;
+
+    book.review = text.trim();
+    saveUserBooks(books);
+
+    // refresh UI to reflect saved review
+    displayBooks();
+
+    // small confirmation
+    alert("Review saved ✓");
+}
+
+function saveProfile() {
+
+    const bio = document.getElementById("bioInput").value.trim();
+    localStorage.setItem("bio_" + currentUser, bio);
+
+    const fileInput = document.getElementById("profilePicInput");
+    const file = fileInput.files[0];
+
+    function finalizeSave(){
+        loadProfile();
+
+        // hide editing controls
+        document.getElementById("profilePicInput").style.display = "none";
+        document.getElementById("bioInput").style.display = "none";
+document.getElementById("bioDisplay").style.display = "block";
+        document.getElementById("saveProfileBtn").style.display = "none";
+        document.getElementById("changeProfileBtn").style.display = "inline-block";
+    }
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            localStorage.setItem("pic_" + currentUser, e.target.result);
+            finalizeSave();
+        };
+        reader.readAsDataURL(file);
+    } else {
+        finalizeSave();
+    }
+}
+
+
+function loadProfile() {
+
+    const bio = localStorage.getItem("bio_" + currentUser);
+    const pic = localStorage.getItem("pic_" + currentUser);
+
+    const bioBox = document.getElementById("bioInput");
+    const img = document.getElementById("profilePic");
+
+// reset first
+img.style.display = "none";
+img.src = "";
+
+if (pic) {
+    img.src = pic;
+    img.style.display = "block";
+}
+
+    const bioDisplay = document.getElementById("bioDisplay");
+
+if (bio) {
+    bioBox.value = bio;
+    bioDisplay.textContent = bio;
+} else {
+    bioDisplay.textContent = "No bio added yet.";
+}
+
+
+    // hide edit controls by default
+   bioBox.style.display = "none";
+document.getElementById("bioDisplay").style.display = "block";
+    document.getElementById("profilePicInput").style.display = "none";
+    document.getElementById("saveProfileBtn").style.display = "none";
+    document.getElementById("changeProfileBtn").style.display = "inline-block";
+}
+
+
+
+function getFriends(){
+    return JSON.parse(localStorage.getItem("friends_"+currentUser)) || [];
+}
+function displayFriends(){
+    const container = document.getElementById("friendsList");
+    const friends = getFriends();
+
+    if(friends.length === 0){
+        container.innerHTML = "<p>No friends added yet.</p>";
+        return;
+    }
+
+    container.innerHTML = friends.map(friend =>
+        `<div style="display:flex;justify-content:space-between;align-items:center;margin:8px 0;">
+            <span>👤 ${friend}</span>
+            <button onclick="removeFriend('${friend}')">Remove</button>
+        </div>`
+    ).join("");
+}
+
+function addFriend(){
+    const input = document.getElementById("friendName");
+    const friend = input.value.trim();
+
+    if(!friend) return;
+
+    if(!users[friend]){
+        alert("User not found.");
+        return;
+    }
+
+    if(friend === currentUser){
+        alert("You cannot add yourself.");
+        return;
+    }
+
+    let friends = getFriends();
+
+    if(!friends.includes(friend)){
+        friends.push(friend);
+        localStorage.setItem("friends_"+currentUser, JSON.stringify(friends));
+    } else {
+        alert("Already added.");
+    }
+
+    input.value = "";   // ✅ clears box
+    displayFriends();
+    loadCommunityFeed();
+}
+function removeFriend(friend){
+    let friends = getFriends().filter(f => f !== friend);
+    localStorage.setItem("friends_"+currentUser, JSON.stringify(friends));
+    displayFriends();
+    loadCommunityFeed();
+}
+
+
+
+function loadCommunityFeed(){
+    const container = document.getElementById("communityFeed");
+    const friends = getFriends();
+
+    if(friends.length === 0){
+        container.innerHTML = "<p>No activity yet.</p>";
+        return;
+    }
+
+    let html = "";
+
+    friends.forEach(friend => {
+        const books = JSON.parse(localStorage.getItem("books_"+friend)) || [];
+
+        if(books.length === 0) return;
+
+        html += `<div style="margin-bottom:15px;">
+                    <strong>${friend} is currently</strong><br>`;
+
+        books.slice(-3).reverse().forEach(b => {
+            html += `📖 ${b.title} — ${b.status}<br>`;
+        });
+
+        html += "</div>";
+    });
+
+    container.innerHTML = html || "<p>No recent updates.</p>";
+}
+
+function autoResize(textarea){
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
+}
+function finalizeProfileSave(){
+    loadProfile();
+
+    /*document.getElementById("profilePicInput").style.display = "none";
+    document.getElementById("saveProfileBtn").style.display = "none";
+    document.getElementById("changeProfileBtn").style.display = "inline-block";*/
+}
+
+    function enableProfileEdit() {
+    document.getElementById("profilePicInput").style.display = "block";
+    document.getElementById("bioInput").style.display = "block";
+    document.getElementById("bioDisplay").style.display = "none";
+    document.getElementById("saveProfileBtn").style.display = "block";
+    document.getElementById("changeProfileBtn").style.display = "none";
+}
+
+function logoutUser() {
+
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("lastSection");
+
+    document.getElementById("homeContainer").style.display = "none";
+
+    document.querySelectorAll(".section").forEach(sec =>
+        sec.classList.remove("active")
+    );
+
+    document.getElementById("authContainer").style.display = "flex";
+
+    document.getElementById("authForm").reset();
+
+    // ✅ CLEAR ALL INPUT FIELDS
+    document.querySelectorAll("input, textarea").forEach(el => {
+        el.value = "";
+    });
+
+    // clear search results
+    const searchResults = document.getElementById("searchResults");
+    if (searchResults) searchResults.innerHTML = "";
+
+    document.getElementById("profilePic").src = "";
+    document.getElementById("profilePic").style.display = "none";
+    document.getElementById("bioDisplay").textContent = "No bio added yet.";
+    document.getElementById("searchUserResults").innerHTML = "";
+document.getElementById("friendSearch").value = "";
+}
+function searchUsers() {
+    const query = document.getElementById("friendSearch").value.trim().toLowerCase();
+    const container = document.getElementById("searchUserResults");
+
+    if (!query) {
+        container.innerHTML = "";
+        return;
+    }
+
+    const matches = Object.keys(users)
+        .filter(u => u.toLowerCase().includes(query) && u !== currentUser);
+
+    if (matches.length === 0) {
+        container.innerHTML = "<p>No users found</p>";
+        return;
+    }
+
+    container.innerHTML = matches.map(user => {
+
+        const pic = localStorage.getItem("pic_" + user);
+        const bio = localStorage.getItem("bio_" + user) || "No bio yet.";
+
+        return `
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:12px;
+            padding:10px;
+            margin:8px 0;
+            background:var(--aged-paper);
+            border-radius:8px;
+        ">
+            
+
+            <div style="flex:1;">
+                <strong>${user}</strong><br>
+                <span style="font-size:13px;opacity:.8;">${bio}</span>
+            </div>
+
+            <button onclick="sendFriendRequest('${user}')">Add</button>
+        </div>
+        `;
+    }).join("");
+}
+function sendFriendRequest(toUser) {
+
+    if (toUser === currentUser) {
+        alert("You cannot add yourself.");
+        return;
+    }
+
+    const requests = JSON.parse(localStorage.getItem("requests_" + toUser)) || [];
+
+    if (requests.includes(currentUser)) {
+        alert("Request already sent");
+        return;
+    }
+
+    requests.push(currentUser);
+    localStorage.setItem("requests_" + toUser, JSON.stringify(requests));
+
+    alert("Friend request sent!");
+    updateNotificationBadge();
+}
+function loadNotifications() {
+    const container = document.getElementById("notificationsList");
+    const requests = JSON.parse(localStorage.getItem("requests_" + currentUser)) || [];
+
+    if (requests.length === 0) {
+        container.innerHTML = "<p>No notifications</p>";
+        return;
+    }
+
+    container.innerHTML = requests.map(user => `
+        <div style="margin-bottom:10px;">
+            👤 ${user} wants to add you
+            <button onclick="acceptRequest('${user}')">Accept</button>
+            <button onclick="rejectRequest('${user}')">Reject</button>
+        </div>
+    `).join("");
+    updateNotificationBadge();
+}
+function acceptRequest(user) {
+
+    let myFriends = getFriends();
+    if (!myFriends.includes(user)) {
+        myFriends.push(user);
+        localStorage.setItem("friends_" + currentUser, JSON.stringify(myFriends));
+    }
+
+    let theirFriends = JSON.parse(localStorage.getItem("friends_" + user)) || [];
+    if (!theirFriends.includes(currentUser)) {
+        theirFriends.push(currentUser);
+        localStorage.setItem("friends_" + user, JSON.stringify(theirFriends));
+    }
+
+    removeRequest(user);
+    loadNotifications();
+    updateNotificationBadge();
+}
+
+function rejectRequest(user) {
+    removeRequest(user);
+    loadNotifications();
+    updateNotificationBadge();
+}
+
+function removeRequest(user) {
+    let requests = JSON.parse(localStorage.getItem("requests_" + currentUser)) || [];
+    requests = requests.filter(u => u !== user);
+    localStorage.setItem("requests_" + currentUser, JSON.stringify(requests));
+}
+
+function updateNotificationBadge(){
+    const requests =
+        JSON.parse(localStorage.getItem("requests_" + currentUser)) || [];
+
+    const dot = document.getElementById("notifDot");
+
+    if (!dot) return;
+
+    dot.style.display = requests.length > 0 ? "block" : "none";
+}
+</script>
+
+
+</body>
+</html>
+
+
+
